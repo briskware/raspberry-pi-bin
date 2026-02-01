@@ -1,6 +1,15 @@
 #!/bin/bash
 
-testfile="$(pwd)/testfile"
+if [ -z "$1" ]; then
+  echo "Will test speed in the current directory, to override run: $(basename $0) <target-directory>"
+fi
+
+target_dir="${1:-$(pwd)}"
+target_dir="${target_dir%/}"
+echo Testing disk speed in directory: ${target_dir}
+
+testfile="$target_dir"/testfile.tmp
+
 # number of 2MB blocks (10 means 20MB)
 fileblocks=500
 
@@ -13,4 +22,3 @@ rm ${testfile}
 
 echo Write Speed: ${write}
 echo  Read Speed: ${reads}
-
